@@ -1,5 +1,7 @@
 package me.mrletsplay.srweb.packet.handler.impl;
 
+import org.java_websocket.WebSocket;
+
 import me.mrletsplay.srweb.game.Player;
 import me.mrletsplay.srweb.game.Room;
 import me.mrletsplay.srweb.packet.Packet;
@@ -15,7 +17,7 @@ public class StartGameHandler extends SingleTypePacketHandler<PacketClientStartG
 	}
 	
 	@Override
-	public PacketData handleSingle(Player player, Packet packet, PacketClientStartGame data) {
+	public PacketData handleSingle(WebSocket webSocket, Player player, Packet packet, PacketClientStartGame data) {
 		Room r = player.getRoom();
 
 		if(!r.isGameRunning() && r.getPlayers().size() >= r.getSettings().getPlayerCount()) {

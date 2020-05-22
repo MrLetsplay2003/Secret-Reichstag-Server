@@ -2,6 +2,8 @@ package me.mrletsplay.srweb.packet.handler.impl;
 
 import java.util.List;
 
+import org.java_websocket.WebSocket;
+
 import me.mrletsplay.srweb.game.Player;
 import me.mrletsplay.srweb.game.Room;
 import me.mrletsplay.srweb.game.state.GameMoveState;
@@ -20,7 +22,7 @@ public class DrawCardsHandler extends SingleTypePacketHandler<PacketClientDrawCa
 	}
 	
 	@Override
-	public PacketData handleSingle(Player player, Packet packet, PacketClientDrawCards data) {
+	public PacketData handleSingle(WebSocket webSocket, Player player, Packet packet, PacketClientDrawCards data) {
 		Room r = player.getRoom();
 		if(r.getGameState().getMoveState().equals(GameMoveState.DRAW_CARDS) && r.getGameState().getPresident().equals(player)) {
 			List<GamePolicyCard> drawnCards = r.getGameState().drawCards();

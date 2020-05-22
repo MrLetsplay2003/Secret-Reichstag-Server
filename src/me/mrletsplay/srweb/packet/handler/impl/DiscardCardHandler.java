@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.java_websocket.WebSocket;
+
 import me.mrletsplay.srweb.game.Player;
 import me.mrletsplay.srweb.game.Room;
 import me.mrletsplay.srweb.game.state.GameMoveState;
@@ -27,7 +29,7 @@ public class DiscardCardHandler extends SingleTypePacketHandler<PacketClientDisc
 	}
 	
 	@Override
-	public PacketData handleSingle(Player player, Packet packet, PacketClientDiscardCard data) {
+	public PacketData handleSingle(WebSocket webSocket, Player player, Packet packet, PacketClientDiscardCard data) {
 		Room r = player.getRoom();
 		GameState s = r.getGameState();
 		if(s.getPresident().equals(player) && s.getMoveState().equals(GameMoveState.DISCARD_PRESIDENT)) {

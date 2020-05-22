@@ -25,7 +25,7 @@ import me.mrletsplay.srweb.game.state.board.action.ActionInspectPlayerResult;
 import me.mrletsplay.srweb.game.state.board.action.ActionKillPlayer;
 import me.mrletsplay.srweb.game.state.board.action.ActionPickPresident;
 import me.mrletsplay.srweb.packet.JavaScriptConvertible;
-import me.mrletsplay.srweb.packet.handler.PacketHandler;
+import me.mrletsplay.srweb.packet.handler.IPacketHandler;
 import me.mrletsplay.srweb.packet.handler.impl.ChatMessageHandler;
 import me.mrletsplay.srweb.packet.handler.impl.DiscardCardHandler;
 import me.mrletsplay.srweb.packet.handler.impl.DisconnectHandler;
@@ -115,7 +115,7 @@ public class SRWeb {
 				ActionBlockPlayer.class
 			);
 	
-	public static final List<PacketHandler> PACKET_HANDLERS = Arrays.asList(
+	public static final List<IPacketHandler> PACKET_HANDLERS = Arrays.asList(
 				new DisconnectHandler(),
 				new DrawCardsHandler(),
 				new DiscardCardHandler(),

@@ -2,6 +2,8 @@
 
 import java.util.Collections;
 
+import org.java_websocket.WebSocket;
+
 import me.mrletsplay.srweb.game.Player;
 import me.mrletsplay.srweb.game.Room;
 import me.mrletsplay.srweb.game.state.GameMoveState;
@@ -21,7 +23,7 @@ public class VetoHandler extends SingleTypePacketHandler<PacketClientVeto> {
 	}
 	
 	@Override
-	public PacketData handleSingle(Player player, Packet packet, PacketClientVeto data) {
+	public PacketData handleSingle(WebSocket webSocket, Player player, Packet packet, PacketClientVeto data) {
 		Room r = player.getRoom();
 		GameState s = r.getGameState();
 		

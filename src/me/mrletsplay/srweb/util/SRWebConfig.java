@@ -19,6 +19,10 @@ public class SRWebConfig {
 		config.saveToFile();
 	}
 	
+	public static FileCustomConfig getAuthConfig(String identifier) {
+		return ConfigLoader.loadFileConfig(new File("auth", identifier + ".yml"));
+	}
+	
 	public static boolean isEnableSSL() {
 		return config.getBoolean("ssl.enable");
 	}

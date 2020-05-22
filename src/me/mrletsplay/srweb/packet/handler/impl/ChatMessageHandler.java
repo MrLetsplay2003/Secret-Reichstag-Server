@@ -1,5 +1,7 @@
 package me.mrletsplay.srweb.packet.handler.impl;
 
+import org.java_websocket.WebSocket;
+
 import me.mrletsplay.srweb.game.Player;
 import me.mrletsplay.srweb.game.Room;
 import me.mrletsplay.srweb.game.state.GameState;
@@ -16,7 +18,7 @@ public class ChatMessageHandler extends SingleTypePacketHandler<PacketClientChat
 	}
 	
 	@Override
-	public PacketData handleSingle(Player player, Packet packet, PacketClientChatMessage data) {
+	public PacketData handleSingle(WebSocket webSocket, Player player, Packet packet, PacketClientChatMessage data) {
 		Room r = player.getRoom();
 		GameState s = r.getGameState();
 		

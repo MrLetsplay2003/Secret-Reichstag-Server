@@ -1,5 +1,7 @@
 package me.mrletsplay.srweb.packet.handler.impl;
 
+import org.java_websocket.WebSocket;
+
 import me.mrletsplay.srweb.SRWeb;
 import me.mrletsplay.srweb.game.Player;
 import me.mrletsplay.srweb.packet.Packet;
@@ -14,7 +16,7 @@ public class DisconnectHandler extends SingleTypePacketHandler<PacketDisconnect>
 	}
 	
 	@Override
-	public PacketData handleSingle(Player player, Packet packet, PacketDisconnect data) {
+	public PacketData handleSingle(WebSocket webSocket, Player player, Packet packet, PacketDisconnect data) {
 		SRWeb.removePlayer(player);
 		player.getWebSocket().close();
 		return null;
