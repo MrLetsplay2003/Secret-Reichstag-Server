@@ -10,6 +10,7 @@ import me.mrletsplay.srweb.game.GameMode;
 import me.mrletsplay.srweb.game.Player;
 import me.mrletsplay.srweb.game.Room;
 import me.mrletsplay.srweb.game.RoomSettings;
+import me.mrletsplay.srweb.game.bot.BotPlayer;
 import me.mrletsplay.srweb.game.state.GameMoveState;
 import me.mrletsplay.srweb.game.state.GameParty;
 import me.mrletsplay.srweb.game.state.GamePolicyCard;
@@ -114,7 +115,9 @@ public class SRWeb {
 				ActionExamineTopCardsOther.class,
 				ActionPickPresident.class,
 				ActionBlockPlayer.class,
-				GameMode.class
+				GameMode.class,
+				
+				BotPlayer.class
 			);
 	
 	public static final List<PacketHandler> PACKET_HANDLERS = Arrays.asList(

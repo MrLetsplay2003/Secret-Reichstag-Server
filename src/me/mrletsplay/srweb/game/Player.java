@@ -13,8 +13,11 @@ import me.mrletsplay.srweb.packet.JavaScriptConvertible;
 import me.mrletsplay.srweb.packet.JavaScriptGetter;
 import me.mrletsplay.srweb.packet.JavaScriptSetter;
 import me.mrletsplay.srweb.packet.Packet;
+import me.mrletsplay.srweb.util.SRWebSocketServer;
 
 public class Player implements JavaScriptConvertible {
+	
+	private SRWebSocketServer server;
 
 	private WebSocket webSocket;
 	
@@ -32,11 +35,16 @@ public class Player implements JavaScriptConvertible {
 	
 	private GameActionData actionData;
 	
-	public Player(WebSocket webSocket, String name) {
+	public Player(SRWebSocketServer server, WebSocket webSocket, String name) {
+		this.server = server;
 		this.webSocket = webSocket;
 		this.id = UUID.randomUUID().toString();
 		this.name = name;
 		this.hand = Collections.emptyList();
+	}
+	
+	public SRWebSocketServer getServer() {
+		return server;
 	}
 	
 	public WebSocket getWebSocket() {

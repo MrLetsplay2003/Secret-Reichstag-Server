@@ -17,5 +17,9 @@ public class PacketClientDiscardCard extends PacketData {
 	public int getDiscardIndex() {
 		return discardIndex;
 	}
+
+	public PacketClientDiscardCard(int discardIndex) {
+		this.discardIndex = discardIndex;
+	}
 	
 }

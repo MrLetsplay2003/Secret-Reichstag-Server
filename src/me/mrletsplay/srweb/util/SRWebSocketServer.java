@@ -17,10 +17,12 @@ import org.java_websocket.server.WebSocketServer;
 import me.mrletsplay.mrcore.json.JSONArray;
 import me.mrletsplay.mrcore.json.JSONObject;
 import me.mrletsplay.mrcore.json.converter.JSONConverter;
+import me.mrletsplay.mrcore.misc.FriendlyException;
 import me.mrletsplay.srweb.SRWeb;
 import me.mrletsplay.srweb.game.GameMode;
 import me.mrletsplay.srweb.game.Player;
 import me.mrletsplay.srweb.game.Room;
+import me.mrletsplay.srweb.game.bot.BotPlayer;
 import me.mrletsplay.srweb.game.state.GameMoveState;
 import me.mrletsplay.srweb.packet.ClassSerializer;
 import me.mrletsplay.srweb.packet.JavaScriptConvertible;
@@ -174,7 +176,7 @@ public class SRWebSocketServer extends WebSocketServer {
 						return;
 					}
 					
-					pl = new Player(conn, con.getPlayerName());
+					pl = new Player(this, conn, con.getPlayerName());
 					
 					Room r;
 					
@@ -225,8 +227,14 @@ public class SRWebSocketServer extends WebSocketServer {
 					String sessID = SRWebSessionStore.createSession(pl);
 					r.addPlayer(pl);
 					pl.send(new Packet(p.getID(), new PacketServerRoomInfo(sessID, pl, r)));
+
+					for(int i = 0; i < 4; i++) {
+						r.addPlayer(new BotPlayer(this));
+					}
+					
 					return;
 				}catch(Exception e) {
+					e.printStackTrace();
 					conn.close(CloseFrame.POLICY_VALIDATION, "Invalid connect request");
 					return;
 				}
@@ -236,6 +244,16 @@ public class SRWebSocketServer extends WebSocketServer {
 			}
 		}
 		
+		try {
+			if(handle(pl, p)) return;
+		}catch(FriendlyException ex) {
+			conn.close(CloseFrame.POLICY_VALIDATION, ex.getMessage());
+		}
+		
+		conn.close(CloseFrame.POLICY_VALIDATION, "No handler available");
+	}
+	
+	public boolean handle(Player pl, Packet p) {
 		for(PacketHandler handler : handlers) {
 			if(handler.shouldHandle(p)) {
 				try {
@@ -243,13 +261,13 @@ public class SRWebSocketServer extends WebSocketServer {
 					pl.send(new Packet(p.getID(), handler.handle(pl, p, p.getData())));
 				}catch(Exception e) {
 					e.printStackTrace();
-					conn.close(CloseFrame.POLICY_VALIDATION, "Exception in handler");
+					throw new FriendlyException("Exception in handler");
 				}
-				return;
+				return true;
 			}
 		}
 		
-		conn.close(CloseFrame.POLICY_VALIDATION, "No handler available");
+		return false;
 	}
 
 	@Override

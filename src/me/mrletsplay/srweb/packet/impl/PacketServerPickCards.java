@@ -21,5 +21,5 @@ public class PacketServerPickCards extends PacketData {
 		this.cards = cards;
 		this.vetoBlocked = vetoBlocked;
 	}
-
+	
 }
